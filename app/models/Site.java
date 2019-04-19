@@ -1,13 +1,23 @@
 package models;
 
-import java.util.Set;
+import java.util.Arrays;
 
 public class Site {
+
+    private Long id;
     private String domain;
     private String plan;
-    private String ownerId;
+    private Long ownerId;
     private Integer leadCount;
-    private Set<String> labels;
+    private String[] labels;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDomain() {
         return domain;
@@ -25,11 +35,11 @@ public class Site {
         this.plan = plan;
     }
 
-    public String getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -41,11 +51,23 @@ public class Site {
         this.leadCount = leadCount;
     }
 
-    public Set<String> getLabels() {
+    public String[] getLabels() {
         return labels;
     }
 
-    public void setLabels(Set<String> labels) {
+    public void setLabels(String[] labels) {
         this.labels = labels;
+    }
+
+    @Override
+    public String toString() {
+        return "Site{" +
+                "id='" + id + '\'' +
+                ", domain='" + domain + '\'' +
+                ", plan='" + plan + '\'' +
+                ", ownerId='" + ownerId + '\'' +
+                ", leadCount=" + leadCount +
+                ", labels=" + Arrays.toString(labels) +
+                '}';
     }
 }
