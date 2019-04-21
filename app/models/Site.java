@@ -1,10 +1,19 @@
 package models;
 
+import play.db.jpa.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Arrays;
 
-public class Site {
+@Entity
+public class Site extends Model {
 
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private Long id;
     private String domain;
     private String plan;
     private Long ownerId;

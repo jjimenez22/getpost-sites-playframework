@@ -38,11 +38,11 @@ public class SiteController extends Controller {
 
         response.status = 201;
 
-        renderJSON(SiteStore.add(site));
+        renderJSON(site.save());
     }
 
     public void get(Long id) {
-        renderJSON(SiteStore.get(id));
+        renderJSON(Site.findById(id));
     }
 //    public void text() {
 //        params.all().entrySet().forEach(stringEntry -> {
