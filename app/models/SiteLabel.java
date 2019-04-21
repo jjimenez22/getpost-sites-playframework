@@ -2,7 +2,7 @@ package models;
 
 import play.db.jpa.Model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 public class SiteLabel extends Model {
@@ -11,9 +11,18 @@ public class SiteLabel extends Model {
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private Long id;
 
-    @ManyToOne
     private Long siteId;
     private String label;
+
+    public SiteLabel() {
+        super();
+    }
+
+    public SiteLabel(Long siteId, String label) {
+        super();
+        this.siteId = siteId;
+        this.label = label;
+    }
 
     public Long getId() {
         return id;

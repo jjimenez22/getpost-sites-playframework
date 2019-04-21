@@ -3,22 +3,24 @@ package models;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Arrays;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class Site extends Model {
 
-//    @Id
+    //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private Long id;
     private String domain;
     private String plan;
     private Long ownerId;
     private Integer leadCount;
-    private String[] labels;
+
+    @OneToMany
+    @JoinColumn(name = "siteId")
+    private Set<SiteLabel> labels;
 
     public Long getId() {
         return id;
@@ -60,11 +62,11 @@ public class Site extends Model {
         this.leadCount = leadCount;
     }
 
-    public String[] getLabels() {
+    public Set<SiteLabel> getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
+    public void setLabels(Set<SiteLabel> labels) {
         this.labels = labels;
     }
 
@@ -76,7 +78,7 @@ public class Site extends Model {
                 ", plan='" + plan + '\'' +
                 ", ownerId='" + ownerId + '\'' +
                 ", leadCount=" + leadCount +
-                ", labels=" + Arrays.toString(labels) +
+                ", labels=" + labels.toString() +
                 '}';
     }
 }

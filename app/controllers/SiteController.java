@@ -2,7 +2,7 @@ package controllers;
 
 import com.google.gson.Gson;
 import models.Site;
-import models.SiteStore;
+import models.SiteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.mvc.Before;
@@ -33,16 +33,16 @@ public class SiteController extends Controller {
         String body = params.get("body");
         logger.info("body: {}", body);
 
-        Site site = gson.fromJson(body, Site.class);
-        logger.info("site: {}", site);
+        SiteDTO siteDTO = gson.fromJson(body, SiteDTO.class);
+        logger.info("siteDTO: {}", siteDTO);
 
         response.status = 201;
 
-        renderJSON(site.save());
+        renderJSON(siteDTO.toSite().save());
     }
 
     public void get(Long id) {
-        renderJSON(Site.findById(id));
+        renderJSON(SiteDTO.fromSite(Site.findById(id)));
     }
 //    public void text() {
 //        params.all().entrySet().forEach(stringEntry -> {
