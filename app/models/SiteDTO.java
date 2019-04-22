@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -92,5 +93,17 @@ public class SiteDTO {
 
     public void setLabels(String[] labels) {
         this.labels = labels;
+    }
+
+    @Override
+    public String toString() {
+        return "SiteDTO{" +
+                "id=" + id +
+                ", domain='" + domain + '\'' +
+                ", plan='" + plan + '\'' +
+                ", ownerId=" + ownerId +
+                ", leadCount=" + leadCount +
+                ", labels=" + Arrays.toString(labels) +
+                '}';
     }
 }
