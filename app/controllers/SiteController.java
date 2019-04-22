@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Http;
+
+import java.util.Optional;
 
 public class SiteController extends Controller {
 
@@ -15,9 +18,13 @@ public class SiteController extends Controller {
 
     @Before
     void checkToken() {
-        String token = request.headers.get("token").value();
-        logger.info("token: {}", token);
-        if (!token.equals("123456789")) {
+        logger.info("Received request: {}", request);
+        String token = "";
+        Optional<Http.Header> optional = Optional.ofNullable(request.headers.get("token"));
+        if (optional.isPresent()) {
+            token = optional.get().value();
+        }
+        if (!"123456789".equals(token)) {
 //            throw new UnauthorizedException();
             wrongToken(null);
             renderText("Bad Token");
@@ -31,25 +38,20 @@ public class SiteController extends Controller {
 
     public void save() {
         String body = params.get("body");
-        logger.info("body: {}", body);
-
         SiteDTO siteDTO = gson.fromJson(body, SiteDTO.class);
-        logger.info("siteDTO: {}", siteDTO);
+        logger.info("Creating website: {}", siteDTO);
 
         response.status = 201;
 
-        renderJSON(siteDTO.toSite().save());
+        SiteDTO created = SiteDTO.fromSite(siteDTO.toSite().save());
+        logger.info("Created website: {}", created);
+        renderJSON(created);
     }
 
     public void get(Long id) {
-        renderJSON(SiteDTO.fromSite(Site.findById(id)));
+        logger.info("Retrieving website with id: {}", id);
+        SiteDTO site = SiteDTO.fromSite(Site.findById(id));
+        logger.info("Retrieved website: {}", site);
+        renderJSON(site);
     }
-//    public void text() {
-//        params.all().entrySet().forEach(stringEntry -> {
-//            System.out.println(stringEntry.getKey()+": ");
-//            Arrays.asList(stringEntry.getValue()).forEach(System.out::println);
-//        });
-//        renderText("");
-
-//    }
 }

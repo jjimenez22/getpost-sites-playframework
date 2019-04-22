@@ -3,6 +3,9 @@ package models;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Class for sending and receiving Sites through REST
+ */
 public class SiteDTO {
     private Long id;
     private String domain;
@@ -11,6 +14,9 @@ public class SiteDTO {
     private Integer leadCount;
     private String[] labels;
 
+    /**
+     * Create {@link SiteDTO} instance from {@link Site}
+     */
     public static SiteDTO fromSite(Site site) {
         SiteDTO result = new SiteDTO();
         result.domain = site.getDomain();
@@ -21,6 +27,22 @@ public class SiteDTO {
         result.labels = site.getLabels().stream()
                 .map(SiteLabel::getLabel)
                 .toArray(String[]::new);
+        return result;
+    }
+
+    /**
+     * Create {@link Site} instance from this instance.
+     */
+    public Site toSite() {
+        Site result = new Site();
+        result.setDomain(domain);
+        result.setId(id);
+        result.setLeadCount(leadCount);
+        result.setPlan(plan);
+        result.setOwnerId(ownerId);
+        result.setLabels(Stream.of(labels)
+                .map(s -> new SiteLabel(id, s))
+                .collect(Collectors.toSet()));
         return result;
     }
 
@@ -70,17 +92,5 @@ public class SiteDTO {
 
     public void setLabels(String[] labels) {
         this.labels = labels;
-    }
-
-    public Site toSite() {
-        Site result = new Site();
-        result.setDomain(domain);
-        result.setId(id);
-        result.setLeadCount(leadCount);
-        result.setOwnerId(ownerId);
-        result.setLabels(Stream.of(labels)
-                .map(s -> new SiteLabel(id, s))
-                .collect(Collectors.toSet()));
-        return result;
     }
 }

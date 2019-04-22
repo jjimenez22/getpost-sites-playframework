@@ -4,12 +4,11 @@ import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 
+/**
+ * {@link Site}'s label assignment.
+ */
 @Entity
 public class SiteLabel extends Model {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
 
     private Long siteId;
     private String label;

@@ -2,6 +2,7 @@ package models;
 
 import play.db.jpa.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -10,15 +11,12 @@ import java.util.Set;
 @Entity
 public class Site extends Model {
 
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
     private String domain;
     private String plan;
     private Long ownerId;
     private Integer leadCount;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "siteId")
     private Set<SiteLabel> labels;
 
