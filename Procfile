@@ -1,0 +1,1 @@
+play run --db.default.url=$DATABASE_URL --http.port=$PORT $PLAY_OPTS
