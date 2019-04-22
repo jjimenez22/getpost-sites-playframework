@@ -6,14 +6,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
 public class Site extends Model {
 
+    @NotNull
     private String domain;
+
+    @NotNull
     private String plan;
+
+    @NotNull
     private Long ownerId;
+
     private Integer leadCount;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Objects.nonNull;
+
 /**
  * Class for sending and receiving Sites through REST
  */
@@ -25,9 +27,11 @@ public class SiteDTO {
         result.leadCount = site.getLeadCount();
         result.ownerId = site.getOwnerId();
         result.plan = site.getPlan();
-        result.labels = site.getLabels().stream()
-                .map(SiteLabel::getLabel)
-                .toArray(String[]::new);
+        if (nonNull(site.getLabels())) {
+            result.labels = site.getLabels().stream()
+                    .map(SiteLabel::getLabel)
+                    .toArray(String[]::new);
+        }
         return result;
     }
 
@@ -41,9 +45,11 @@ public class SiteDTO {
         result.setLeadCount(leadCount);
         result.setPlan(plan);
         result.setOwnerId(ownerId);
-        result.setLabels(Stream.of(labels)
-                .map(s -> new SiteLabel(id, s))
-                .collect(Collectors.toSet()));
+        if (nonNull(labels)) {
+            result.setLabels(Stream.of(labels)
+                    .map(s -> new SiteLabel(id, s))
+                    .collect(Collectors.toSet()));
+        }
         return result;
     }
 
